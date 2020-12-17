@@ -27,6 +27,7 @@ Route::get('postingan', 'PostinganController@index');
 Route::post('postingan/store', 'PostinganController@store');
 Route::get('postingan/user/{id}', 'PostinganController@postinganUser');
 Route::get('postingan/{id}', 'PostinganController@show');
+Route::post('postingan/update', 'PostinganController@update');
 Route::get('postingan/destroy/{id}', 'PostinganController@destroy');
 Route::get('postingan/get-foto/{id}', 'PostinganController@getFotoPostingan');
 

@@ -39,7 +39,10 @@ class PostinganController extends Controller
             $postingan->like = 0;
             $postingan->save();
             DB::commit();
-            return response()->json(['success' => true,$postingan]);
+            $postingan->foto = $postingan->getUrlFoto();
+            $postingan->tgl_postingan = Carbon::parse($postingan->tgl_postingan)->format('m F Y | H:i');
+            $postingan->id_postingan = $postingan->id;
+            return response()->json(['success' => true, 'data' => $postingan]);
         } catch (\Throwable $th) {
             return response()->json(['success' => false]);
         }
@@ -58,14 +61,49 @@ class PostinganController extends Controller
         return response()->json(['postingan' => $postingan, 'komentar' => $komentar]);
     }
 
-    public function destroy($id){
-        $postingan = Postingan::find($id);
-        File::delete(storage_path($postingan->foto));
-        foreach($postingan->komentar as $komentar){
-            $komentar->delete();
+    public function update(Request $request){
+        DB::beginTransaction();
+        try {
+
+            $postingan = Postingan::find($request->id);
+
+            if($request->file('foto') != null){
+                File::delete(storage_path($postingan->foto));
+                $filename = time().Str::random(3).'.'.$request->file('foto')->getClientOriginalExtension();
+                $request->file('foto')->move(storage_path('app/postingan'), $filename);
+                $postingan->foto = 'app/postingan/'.$filename;
+            }
+
+            $postingan->caption = $request->caption;
+            $postingan->save();
+            DB::commit();
+
+            $postingan->foto = $postingan->getUrlFoto();
+            $postingan->tgl_postingan = Carbon::parse($postingan->tgl_postingan)->format('m F Y | H:i');
+            $postingan->id_postingan = $postingan->id;
+
+            return response()->json(['success' => true, 'data' => $postingan]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['success' => false]);
         }
-        $postingan->delete();
-        return response()->json(['success' => 'Postingan Berhasil dihapus']);
+    }
+
+    public function destroy($id){
+        try {
+            DB::beginTransaction();
+            $postingan = Postingan::find($id);
+            File::delete(storage_path($postingan->foto));
+            foreach($postingan->komentar as $komentar){
+                $komentar->delete();
+            }
+            $postingan->delete();
+            DB::commit();
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['success' => false]);
+        }
     }
 
     public function getFotoPostingan($id){
