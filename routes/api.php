@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', 'AuthController@logout');
     Route::get('user', 'AuthController@user');
+    Route::post('fcm-token', 'FCMController@store');
+    Route::get('get-notif', 'NotificationController@getNotif');
+    Route::get('read-notif/{id}', 'NotificationController@readNotif');
 });
 
 Route::post('update/profile/{id}', 'AuthController@updateProfile');

@@ -44,6 +44,7 @@ class PostinganController extends Controller
             $postingan->id_postingan = $postingan->id;
             return response()->json(['success' => true, 'data' => $postingan]);
         } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json(['success' => false]);
         }
 

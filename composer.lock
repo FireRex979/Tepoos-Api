@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ba1b9e92535649247b1c97a98ae7ba8",
+    "content-hash": "0d4e5a3b5fcd24543e4d70ce2b17c96e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -920,6 +920,53 @@
                 "watermark"
             ],
             "time": "2019-11-02T09:15:47+00:00"
+        },
+        {
+            "name": "kawankoding/laravel-fcm",
+            "version": "0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kawankoding/laravel-fcm.git",
+                "reference": "fc552b6cc59836503b1c1d065c0f86a6a1a39e23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kawankoding/laravel-fcm/zipball/fc552b6cc59836503b1c1d065c0f86a6a1a39e23",
+                "reference": "fc552b6cc59836503b1c1d065c0f86a6a1a39e23",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.1|^6.0|^7.0|^8.0",
+                "php": "^5.6|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kawankoding\\Fcm\\FcmServiceProvider"
+                    ],
+                    "aliases": {
+                        "Fcm": "Kawankoding\\Fcm\\FcmFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kawankoding\\Fcm\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Muhammad Amirul Ihsan",
+                    "email": "muh.amirul.ihsan@gmail.com"
+                }
+            ],
+            "description": "A package to send Firebase notification cross Laravel Application",
+            "time": "2020-10-14T01:50:44+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -5899,6 +5946,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
