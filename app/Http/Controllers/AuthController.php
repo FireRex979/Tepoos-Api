@@ -105,7 +105,7 @@ class AuthController extends Controller
                 $constraint->aspectRatio();
             })->save(storage_path('app/user').'/'.$filename);
 
-            $user = User::find($request->id_user);
+            $user = User::find(Auth::user()->id);
             File::delete(storage_path($user->foto_profile));
 
             // $request->file('foto_profile')->move(storage_path('app/user'), $filename);
@@ -114,7 +114,9 @@ class AuthController extends Controller
             DB::commit();
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
-            return $th->getMessage();
+            throw $th;
+            DB::rollBack();
+            return response()->json(['success' => false]);
         }
     }
 
